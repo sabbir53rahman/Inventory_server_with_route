@@ -6,13 +6,17 @@ const router = express.Router();
 
 const routes = [
   {
-    path: "/user",
+    path: "/users",
     route: userRoute,
   },
   {
-    path: "/product",
+    path: "/products",
     route: productRoute,
   },
+//   {
+//     path: "/orders",
+//     route: ordersRoute,
+//   },
 ];
 
 routes.forEach((route) => {

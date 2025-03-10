@@ -1,8 +1,14 @@
 import express from "express";
+import client from "../../../db/index.js";
 const router = express.Router();
 
+
+const productsCollection = client
+      .db("InventoryUserDB")
+      .collection("products");
+
 // Add a new product
-router.post("/products", async (req, res) => {
+router.post("/", async (req, res) => {
   const product = req.body;
 
   if (!product.name || !product.price) {
@@ -35,7 +41,7 @@ router.post("/products", async (req, res) => {
 });
 
 // Get all products
-router.get("/products", async (req, res) => {
+router.get("/", async (req, res) => {
   const page = req.query.page ? parseInt(req.query.page) : null;
   const size = req.query.size ? parseInt(req.query.size) : null;
   const search = req.query.search || "";

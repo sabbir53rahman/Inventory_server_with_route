@@ -1,8 +1,12 @@
 import { Router } from "express";
+import client from "../../../db/index.js";
 const router = Router();
 
+
+const usersCollection = client.db("InventoryUserDB").collection("users");
+
 // Register a new user
-router.post("/users", async (req, res) => {
+router.post("/", async (req, res) => {
   const user = req.body;
   const existingUser = await usersCollection.findOne({ email: user.email });
 
@@ -20,13 +24,13 @@ router.post("/users", async (req, res) => {
 });
 
 // Get all users
-router.get("/users", async (req, res) => {
+router.get("/", async (req, res) => {
   const result = await usersCollection.find().toArray();
   res.send(result);
 });
 
 //make admin
-router.patch("/users/admin/:id", async (req, res) => {
+router.patch("/admin/:id", async (req, res) => {
   const id = req.params.id;
   const filter = { _id: new ObjectId(id) };
   const updatedDoc = {
@@ -39,7 +43,7 @@ router.patch("/users/admin/:id", async (req, res) => {
 });
 
 //delete a user
-router.delete("/users/:id", async (req, res) => {
+router.delete("/:id", async (req, res) => {
   const id = req.params.id;
   const query = { _id: new ObjectId(id) };
   const result = await usersCollection.deleteOne(query);
