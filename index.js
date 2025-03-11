@@ -26,12 +26,15 @@ app.get("/", (req, res) => {
 });
 
 // Start server
+try {
+  console.log("Connecting with MongoDB...");
+  await client.connect();
+  console.log("Connected with MongoDB");
 
-console.log("connecting with mongodb");
-await client.connect();
-console.log("connected with mongodb");
-
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
+} catch (error) {
+  console.error("MongoDB Connection Error:", error.message);
+}
