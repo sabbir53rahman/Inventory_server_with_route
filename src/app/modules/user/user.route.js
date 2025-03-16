@@ -1,10 +1,12 @@
 import { Router } from "express";
 import { userService } from "./user.service.js";
+import validationMiddleware from "../../../helper/zodValidator.js";
+import { userValidation } from "./uservalidation.js";
 
 const router = Router();
 
 // Register a new user
-router.post("/", userService.registerUser);
+router.post("/", validationMiddleware(userValidation.createValidation), userService.registerUser);
 
 // Get all users
 router.get("/", userService.getAllUsers);
